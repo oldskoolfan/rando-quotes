@@ -31,7 +31,10 @@ export class QuoteService {
 
     console.debug(`[getRandomQuote] searching for id: ${id}`);
 
-    return this.quoteRepository.findOneBy({ id });
+    return this.quoteRepository.findOne({
+      where: { id },
+      relations: { character: true },
+    });
   }
 
   async createQuote({ character: charName, quoteId, quoteText }: QuoteDto): Promise<Quote> {

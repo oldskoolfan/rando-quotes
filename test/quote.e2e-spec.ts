@@ -4,47 +4,47 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 
 type Quote = {
-    quote_id: number;
-    quote: string;
-    character: string;
+  quote_id: number;
+  quote: string;
+  character: string;
 };
 
 describe('Random quote (e2e)', () => {
-    let app: INestApplication;
-    let server: any;
+  let app: INestApplication;
+  let server: any;
 
-    beforeAll(async () => {
-        const moduleFixture: TestingModule = await Test.createTestingModule({
-            imports: [AppModule],
-        }).compile();
-      
-        app = moduleFixture.createNestApplication();
-        await app.init();
-        server = app.getHttpServer();
-    });
+  beforeAll(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
 
-    it('should seed the db if necessary', async () => {
-        const response = await request(server).get('/quote');
+    app = moduleFixture.createNestApplication();
+    await app.init();
+    server = app.getHttpServer();
+  });
 
-        if (Array.isArray(response.body) && response.body.length > 0) {
-            // no seed necessary
-            console.debug('no seed necesary');
-            expect(true).toBeTruthy();
-        } else {
-            // seed the database from office_quotes.json
-            console.debug('seeding random-quote-db with office_quotes.json');
+  it('should seed the db if necessary', async () => {
+    const response = await request(server).get('/quote');
 
-            const officeQuotes: Quote[] = require('../src/data/office_quotes.json');
+    if (Array.isArray(response.body) && response.body.length > 0) {
+      // no seed necessary
+      console.debug('no seed necessary');
+      expect(true).toBeTruthy();
+    } else {
+      // seed the database from office_quotes.json
+      console.debug('seeding random-quote-db with office_quotes.json');
 
-            for (const {quote_id: id, quote, character} of officeQuotes) {
-                await request(server).post('/quote')
-                    .send({
-                        quoteId: id,
-                        quoteText: quote,
-                        character,
-                    })
-                    .set('Accept', 'application/json');
-            }
-        }
-    })
+      const officeQuotes: Quote[] = require('../src/data/office_quotes.json');
+
+      for (const { quote_id: id, quote, character } of officeQuotes) {
+        await request(server).post('/quote')
+          .send({
+            quoteId: id,
+            quoteText: quote,
+            character,
+          })
+          .set('Accept', 'application/json');
+      }
+    }
+  })
 })

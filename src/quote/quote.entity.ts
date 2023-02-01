@@ -3,12 +3,12 @@ import { Character } from '../character/character.entity';
 
 @Entity()
 export class Quote {
-    @PrimaryColumn()
-    id: number;
+  @PrimaryColumn()
+  id: number;
 
-    @Column()
-    quote: string;
+  @Column()
+  quote: string;
 
-    @ManyToOne(() => Character, char => char.quotes)
-    character: Character;
+  @ManyToOne(() => Character, char => char.quotes)
+  character: Character;
 }
