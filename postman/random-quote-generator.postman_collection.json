@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "bb758ca2-8764-4f4b-8678-ca33c800819b",
+		"name": "Random Quote Generator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Hello World",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server_host}}/",
+					"host": [
+						"{{server_host}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Random Quote",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server_host}}/quote/random",
+					"host": [
+						"{{server_host}}"
+					],
+					"path": [
+						"quote",
+						"random"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Quote",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"quoteText\": \"Corporate really doesn’t really interfere with me at all. Jan Levinson Gould. Jan, hello. I call her Hillary Rodham Clinton. Right? Not to her face, because… well, not because I’m scared of her. Because I’m not. But, um… Yeah.\",\r\n    \"character\": \"Michael\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server_host}}/quote",
+					"host": [
+						"{{server_host}}"
+					],
+					"path": [
+						"quote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Characters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server_host}}/character",
+					"host": [
+						"{{server_host}}"
+					],
+					"path": [
+						"character"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Character",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Michael\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server_host}}/character",
+					"host": [
+						"{{server_host}}"
+					],
+					"path": [
+						"character"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
