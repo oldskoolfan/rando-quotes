@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+import { CharacterService } from './character/character.service';
 // import { Quote } from './quote.entity';
 import { QuoteService } from './quote/quote.service';
 
@@ -7,6 +8,7 @@ import { QuoteService } from './quote/quote.service';
 export class AppController {
   constructor(
     private readonly appService: AppService,
+    private readonly charService: CharacterService,
     private readonly quoteService: QuoteService,
   ) {}
 
@@ -21,7 +23,17 @@ export class AppController {
   }
 
   @Post("/quote")
-  saveQuote(@Body() createQuote: { quoteText: string }) {
+  saveQuote(@Body() createQuote: { characterId: number, quoteText: string }) {
     return this.quoteService.createQuote(createQuote);
+  }
+
+  @Get("/character")
+  getCharacters() {
+    return this.charService.getCharacters();
+  }
+
+  @Post("/character")
+  saveCharacter(@Body() createChar: { name: string }) {
+    return this.charService.createCharacter(createChar);
   }
 }

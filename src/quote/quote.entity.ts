@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
-// import { Character } from './character.entity';
+import { Character } from 'src/character/character.entity';
 
 @Entity()
 export class Quote {
@@ -9,6 +9,6 @@ export class Quote {
     @Column()
     quote: string;
 
-    // @ManyToOne(() => Character, char => char.quotes)
-    // character: Character;
+    @ManyToOne(() => Character, char => char.quotes)
+    character: Character;
 }
