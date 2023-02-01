@@ -1,8 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CharacterService } from './character/character.service';
-// import { Quote } from './quote.entity';
-import { QuoteService } from './quote/quote.service';
+import { QuoteDto, QuoteService } from './quote/quote.service';
 
 @Controller()
 export class AppController {
@@ -17,13 +16,18 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get("/quote")
+  @Get("/quote/random")
   getRandomQuote() {
     return this.quoteService.getRandomQuote();
   }
 
+  @Get("/quote")
+  getQuotes() {
+    return this.quoteService.getQuotes();
+  }
+
   @Post("/quote")
-  saveQuote(@Body() createQuote: { characterId: number, quoteText: string }) {
+  saveQuote(@Body() createQuote: QuoteDto) {
     return this.quoteService.createQuote(createQuote);
   }
 

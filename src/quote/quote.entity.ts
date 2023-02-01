@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
-import { Character } from 'src/character/character.entity';
+import { Character } from '../character/character.entity';
 
 @Entity()
 export class Quote {

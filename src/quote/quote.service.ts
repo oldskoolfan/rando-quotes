@@ -1,8 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Character } from 'src/character/character.entity';
+import { Character } from '../character/character.entity';
 import { Repository } from 'typeorm';
 import { Quote } from './quote.entity';
+
+export type QuoteDto = {
+  character: string;
+  quoteId: number;
+  quoteText: string;
+};
 
 @Injectable()
 export class QuoteService {
@@ -10,22 +16,40 @@ export class QuoteService {
     @InjectRepository(Quote)
     private readonly quoteRepository: Repository<Quote>,
     @InjectRepository(Character)
-    private readonly charRepository: Repository<Quote>
+    private readonly charRepository: Repository<Character>
   ) {}
 
-  getRandomQuote(): Promise<Quote[]> {
-    return this.quoteRepository.find();
+  getQuotes(): Promise<Quote[]> {
+    return this.quoteRepository.find({
+      relations: { character: true },
+    });
   }
 
-  async createQuote({ characterId, quoteText }: { characterId: number, quoteText: string }): Promise<Quote> {
-    const character = await this.charRepository.findOneBy({ id: characterId });
+  async getRandomQuote(): Promise<Quote> {
+    const max = await this.quoteRepository.count();
+    const id = Math.floor(Math.random() * max);
+
+    console.debug(`[getRandomQuote] searching for id: ${id}`);
+
+    return this.quoteRepository.findOneBy({ id });
+  }
+
+  async createQuote({ character: charName, quoteId, quoteText }: QuoteDto): Promise<Quote> {
+    let character = await this.charRepository.findOneBy({ name: charName } );
+
+    if (character === null) {
+      character = this.charRepository.create({ name: charName });
+      await this.charRepository.save([character]);
+    }
+
     const newQuote = this.quoteRepository.create({
+      id: quoteId,
       quote: quoteText,
       character,
     });
 
-    this.quoteRepository.save([newQuote]);
+    await this.quoteRepository.save([newQuote]);
 
-    return newQuote;
+    return Promise.resolve(newQuote);
   }
 }
