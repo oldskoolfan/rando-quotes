@@ -3,7 +3,7 @@
 ## FYI new feature coming
 
 ## Notes: 
-This was developed on Windows 11 in WSL Ubuntu 20.04.5 with Node v18 using VS Code and Postman.
+This was painstakingly developed on Microsoft Windows 11 in WSL Ubuntu 20.04.5 with Node v18 using VS Code annnnd Postman.
 
 All endpoints are in the `AppController`. The main endpoint for getting a random quote is `/quote/random`. Other endpoints were added to test the database functionality.
 
